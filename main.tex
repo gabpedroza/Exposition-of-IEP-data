@@ -1,10 +1,13 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
+\usepackage[title]{appendix}
 \usepackage{amsmath}
 \usepackage{circuitikz}
 \usepackage{hyperref}
+\usepackage{caption}
 \input{titlepage}
 \begin{document}
+\captionsetup{font=small}
 \newcommand{\Vout}{V_{\text{out}}}
 \newcommand{\Vin}{V_{\text{in}}}
 \newcommand{\Vusb}{V_{\text{USB}}}
@@ -18,11 +21,11 @@
 \section{Introduction and Objectives}
 As part of the Physical Principles of Electronics class, the electrical features of a theoretical capacitor were discussed in detail. This allowed for the prediction both of its transient behaviour while charging under a resistor, and of the attenuation offered to AC signals when part of a low pass $RC$-filter.
 \par However, electrolytic capacitors are different from their theoretical counterparts, as they are polarised and have imperfect insulation between its conductors. Furthermore, both resistors and capacitors are subject to manufacturing tolerances which can impact the agreement between calculated and measured behaviour. None of this was directly explored in the theoretical lectures, thus justifying these experiments.
-\par Therefore, the goal of the experiments was to quantify the difference between the expected and the measured values for the characteristic time and attenuation profiles of a $RC$-filter. Moreover, as the dual nature of the experiments allows for the refinement of the theoretical prediction by using $\tau$ to estimate the attenuation, this was also done to verify if improvement in agreement followed. 
+\par Therefore, the goal of the experiments was to quantify the difference between the expected and the measured values for the characteristic time and attenuation profiles of a $RC$-filter. Moreover, the experiments also aim at measuring the impact of component tolerances in circuit behaviour. In particular, it is to be tested how much choosing a non-nominal value for $\tau$ within said tolerances improves agreement between data and theory.
 \section{Experimental Method}
-For both experiments, it was used a carbon film resistor of resistance $R = 100 \text{ k}\Omega \pm 5\%$ and an electrolytic capacitor of capacitance $C = 1 \text{ }\mu\text{F} \pm 20\%$. Further details can be found at the respective handouts for Exercise B and C.
+For both experiments, it was used a carbon film resistor of resistance $R = 100 \text{ k}\Omega \pm 5\%$ and an electrolytic capacitor of capacitance $C = 1 \text{ }\mu\text{F} \pm 20\%$. Further details can be found in the respective handouts for Exercise B and C.
 \subsection{Transient response}
-The circuit was arranged as shown in Figure \ref{fig:transient}. The \textit{LED} was used as a power indicator in accordance with the guide in Exercise B, and its effect in the measurements are negligible. The power was implemented by a standard \textit{USB} supply, whose voltage was measured at $\Vusb = 5.15 \text{ V}$. The switch was a wire which was plugged into the correct breadboard hole in order to close the circuit. Finally the capacitor was manually discharged by shorting its legs between measurements, in order to avoid unintended influences between runs.
+The circuit was arranged as shown in Figure \ref{fig:transient}. The \textit{LED} was used as a power indicator in accordance with the guide in Exercise B, and its effects in the measurements are negligible. The power was implemented by a standard \textit{USB} supply, whose voltage was measured at $\Vusb = 5.15 \text{ V}$. The switch was a wire which was plugged into the correct breadboard hole in order to close the circuit. Finally the capacitor was manually discharged by shorting its legs between measurements, in order to avoid unintended influences between runs.
 \begin{figure}[!htb]
 \centering
     \begin{circuitikz}
@@ -51,7 +54,7 @@ The circuit was arranged as shown in Figure \ref{fig:transient}. The \textit{LED
 \end{figure}
 \par Every run, the capacitor would start discharged and with the switch open. Then, the switch would be closed, and the voltage of the capacitor would be measured by a one-shot oscilloscope through a $1\text{ M}\Omega$ probe, capturing its charging curve.
 \subsection{AC attenuation}
-For the AC attenuation measurements, the circuit was arranged as show in Figure \ref{fig:ac}. For the supply, it was used the wave generator of the oscilloscope itself, set to an amplitude of $1 \text{ V}$, and a DC offset of $1$ V too, in order to meet the polarity of the capacitor. The probes were set to $10\times1\text{ M} \Omega = 10 \text{ M}\Omega$ of impedance, and the oscilloscope was set to ``AC Mode" so as to neglect DC offsets in the measurements.
+For the AC attenuation measurements, the circuit was arranged as shown in Figure \ref{fig:ac}. For the supply, it was used the wave generator of the oscilloscope itself, set to an amplitude of $1 \text{ V}$, and a DC offset of $1$ V too, in order to meet the polarity of the capacitor. The probes were set to $10\times1\text{ M} \Omega = 10 \text{ M}\Omega$ of impedance, and the oscilloscope was set to ``AC Mode" so as to neglect DC offsets in the measurements.
 \begin{figure}[!htb]
 \centering
     \begin{circuitikz}
@@ -78,10 +81,10 @@ For the AC attenuation measurements, the circuit was arranged as show in Figure 
     \caption{Circuit diagram with nominal values used to measured the AC response of the filter.}
     \label{fig:ac}
 \end{figure}
-\par Since what was measured was AC response, there was no need to discharge the capacitor between runs. For each frequency, the oscilloscope (in one-shot mode) directly measured the AC root-mean-square (RMS) ripple voltage of both $\vin$ and $\vout$ in order to compute the attenuation.
+\par Since AC response was being measured, there was no need to discharge the capacitor between runs. For each frequency, the oscilloscope (in one-shot mode) directly measured the AC root-mean-square (RMS) ripple voltage of both $\vin$ and $\vout$ in order to compute the attenuation.
 \section{Theory}
 \subsection{Transient response}
-For a capacitor $C$ charging under a constant power supply $\Vusb$ with a resistor $R$ in series, Kirchhoff laws dictate that
+For a capacitor $C$ charging under a constant power supply $\Vusb$ with a resistor $R$ in series, Kirchhoff's Voltage Law dictates that
 \begin{equation*}
     \begin{split}
         \Vusb &= RI + \frac{Q}{C} = RI + \Vout,
@@ -103,11 +106,11 @@ for the experiment.
 Let an oscilloscope supply a voltage given by $\Vin(t) = A\cos(\omega t) + B$ to a resistor $R$ in series with a capacitor $C$. As the equations governing the circuit are linear, the DC offset $B$ can be separated from the AC signal $\vin(t) = A\cos(\omega t)$; in particular, as the oscilloscope was set to measure only AC signals, $B$ can be safely ignored. Furthermore, the steady state of the system shall be analysed, allowing for the use of impedances to compute the expected behaviour of the capacitor.
 \par For the purposes of the experiment, the circuit can be thought of as a voltage divider. The voltage in the capacitor then becomes
 \begin{equation*}
-    \vout^*= \vin^*\frac{j/\omega C}{R + 1/j\omega C},
+    \vout^*= \vin^*\frac{1/j\omega C}{R + 1/j\omega C},
 \end{equation*}
-where stared variables denote complex counterparts to the real variables (i.e. $\vin^* = A\exp(j\omega t)$, etc.) Then the RMS value can be computed in a straightforward manner, viz.
+where starred variables denote complex counterparts to the real variables (i.e. $\vin^* = A\exp(j\omega t)$, etc.) Then the RMS value can be computed in a straightforward manner, viz.
 \begin{equation*}
-        \vout^{\text{RMS}} = \left[\frac{1}{2\pi}\int\limits_0^{2\pi}\left|\vin^*\frac{j/\omega C}{R + 1/j\omega C}\right|^2dt\right]^{1/2} = \frac{1}{\sqrt{1 + (\omega RC)^2}} \vinr.
+        \vout^{\text{RMS}} = \left[\frac{1}{2\pi}\int\limits_0^{2\pi}\left|\vin^*\frac{1/j\omega C}{R + 1/j\omega C}\right|^2dt\right]^{1/2} = \frac{1}{\sqrt{1 + (\omega RC)^2}} \vinr.
 \end{equation*}
 The attenuation in decibels is then given by
 \begin{equation}
@@ -201,7 +204,7 @@ The data collected by the experiment detailed in the Experimental Method section
 \par Because the attenuation was measured with a $10 \text{ M}\Omega$ probe, and the leakage current of the capacitor is negligible (as hinted by the result of (\ref{eqn:reff}), which is close to the rated impedance of the oscilloscope), it is expected that the previously presented model for this circuit suffices to explain the results. Therefore, a refined theoretical model is not drafted. 
 \section{Discussion}
 Both the AC attenuation and the transient response experiments showed close agreement with the theoretical model, without any significant deviations. 
-\par The reader can readily see that the theoretical attenuation, in particular the roll-off predicted in (\ref{eqn:roll_off}), is observed with great accuracy in the experimental data of Figure \ref{fig:ac_graph}. This agreement is quantified by the small RMS error of $0.380 \text{ dB}$ across the fit. This can be improved in an \textit{ad hoc} manner by choosing a $\tau$ value that still in the boundaries imposed by (\ref{eqn:tau_boundary}) that minimises the RMS error. Indeed, it seems that a value of $\tau ' \approx 95\text{ ms}$ gives a significantly closer fit, with RMS error of  $0.151 \text{ dB}$, whose slightly different plot can be seen in Figure \ref{fig:ac_graph_corrected}.
+\par The reader can readily see that the theoretical attenuation, in particular the roll-off predicted in (\ref{eqn:roll_off}), is observed with great accuracy in the experimental data of Figure \ref{fig:ac_graph}. This agreement is quantified by the small RMS error of $0.380 \text{ dB}$ across the fit. This can be improved in an \textit{ad hoc} manner by choosing a $\tau$ value still in the boundaries imposed by (\ref{eqn:tau_boundary}) that minimises the RMS error. Indeed, it seems that a value of $\tau ' \approx 95\text{ ms}$ gives a closer fit, with RMS error of  $0.151 \text{ dB}$, whose slightly different plot can be seen in Figure \ref{fig:ac_graph_corrected}.
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=\linewidth]{ac_graph_corrected.pdf}
@@ -216,5 +219,12 @@ Both the AC attenuation and the transient response experiments showed close agre
     \item The tolerances of the capacitor and of the resistor were found to impact the attenuation values more than the transient response, although in the particular experimental setup used the actual value for $\tau$ was very close to nominal. It thus remains inconclusive whether larger differences could yield widely different results.
     \item It was found that choosing an \textit{ad hoc} value for $\tau$ within the tolerances managed to improve the agreement between theory and data, particularly in the AC attenuation prediction.
 \end{enumerate}
-
+\begin{appendices}
+\section{Complete dataset}
+    \begin{itemize}
+        \item Data for transient response: \\\url{https://drive.google.com/file/d/1xkVoVKPQf44SvPc_8-n4ES4F0VvzIOdi/view?usp=sharing}
+        \item Data for AC attenuation: \\
+        \url{https://docs.google.com/spreadsheets/d/1DedUJOme2nNKu-LPahmzVtML57rTUMDswer1W_CGQ3w/edit?usp=sharing}
+    \end{itemize}
+\end{appendices}
 \end{document}
