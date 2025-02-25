@@ -1,1 +1,1 @@
-Lab report concerning Exercises B and C of the Integrated Electrical Project destined at the Exposition class. Largely based on the supplied guide by SJS.
+Lab report concerning Exercises B and C of the Integrated Electrical Project destined at the Exposition class. Largely based on the supplied guide by SJS. The end result can be read in "end-report.pdf"
